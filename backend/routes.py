@@ -404,3 +404,143 @@ def bulk_update():
 def health_check():
     """Проверка здоровья API"""
     return jsonify({'status': 'healthy', 'message': 'API is running'})
+
+
+# Initialize default data endpoint
+@api.route('/init-data', methods=['POST'])
+def initialize_data():
+    """Инициализация базы данных начальными данными"""
+    try:
+        # Проверяем, есть ли уже данные
+        if Project.query.first() is not None:
+            return jsonify({'message': 'Data already exists', 'status': 'skipped'}), 200
+        
+        # Проекты-примеры
+        projects = [
+            Project(
+                title='Portfolio Website',
+                description='Modern portfolio website with admin panel built with React and Flask. Features include dynamic content management, projects showcase, skills display, and contact form.',
+                short_description='Personal portfolio with CMS',
+                technologies=['React', 'Flask', 'PostgreSQL', 'TailwindCSS'],
+                github_url='https://github.com/yourusername/portfolio',
+                demo_url='https://yourportfolio.com',
+                category='Web Application',
+                featured=True,
+                order=1
+            ),
+            Project(
+                title='E-Commerce Platform',
+                description='Full-featured e-commerce platform with product catalog, shopping cart, payment integration, and order management.',
+                short_description='Online store with Stripe integration',
+                technologies=['React', 'Node.js', 'MongoDB', 'Stripe'],
+                category='Web Application',
+                featured=True,
+                order=2
+            ),
+            Project(
+                title='Task Manager',
+                description='Collaborative task management application with real-time updates using WebSockets.',
+                short_description='Team collaboration tool',
+                technologies=['React', 'Express', 'Socket.io', 'MongoDB'],
+                category='Web Application',
+                featured=False,
+                order=3
+            ),
+        ]
+        
+        # Навыки
+        skills = [
+            Skill(name='React', category='Frontend', level=90, icon='⚛️', order=1),
+            Skill(name='JavaScript', category='Frontend', level=95, icon='🟨', order=2),
+            Skill(name='TypeScript', category='Frontend', level=85, icon='🔷', order=3),
+            Skill(name='TailwindCSS', category='Frontend', level=90, icon='🎨', order=4),
+            Skill(name='Python', category='Backend', level=90, icon='🐍', order=5),
+            Skill(name='Flask', category='Backend', level=85, icon='🌶️', order=6),
+            Skill(name='PostgreSQL', category='Backend', level=80, icon='🐘', order=7),
+            Skill(name='MongoDB', category='Backend', level=75, icon='🍃', order=8),
+            Skill(name='Git', category='Tools', level=90, icon='📚', order=9),
+            Skill(name='Docker', category='Tools', level=75, icon='🐳', order=10),
+        ]
+        
+        # Секции About
+        about_sections = [
+            AboutSection(
+                section_key='intro',
+                title='About Me',
+                content='I am a passionate Full Stack Developer with expertise in building modern, scalable web applications. I love creating elegant solutions to complex problems.',
+                icon='👨‍💻',
+                order=1
+            ),
+            AboutSection(
+                section_key='experience',
+                title='Experience',
+                content='5+ years of experience in web development, working with various technologies and frameworks. Specialized in React, Flask, and cloud deployments.',
+                icon='💼',
+                order=2
+            ),
+            AboutSection(
+                section_key='education',
+                title='Education',
+                content='Computer Science degree with focus on software engineering and web technologies. Continuous learner, always exploring new technologies.',
+                icon='🎓',
+                order=3
+            ),
+        ]
+        
+        # Контент для главной страницы
+        content_blocks = [
+            ContentBlock(
+                key='hero_greeting',
+                type='text',
+                content='$ whoami',
+                page='home',
+                order=1
+            ),
+            ContentBlock(
+                key='hero_name',
+                type='heading',
+                content='Full Stack Developer',
+                page='home',
+                order=2
+            ),
+            ContentBlock(
+                key='hero_title',
+                type='text',
+                content='Building Modern Web Experiences',
+                page='home',
+                order=3
+            ),
+            ContentBlock(
+                key='hero_description',
+                type='text',
+                content='I create beautiful, functional, and user-friendly websites and applications using the latest technologies.',
+                page='home',
+                order=4
+            ),
+        ]
+        
+        # Добавляем все в БД
+        for project in projects:
+            db.session.add(project)
+        for skill in skills:
+            db.session.add(skill)
+        for section in about_sections:
+            db.session.add(section)
+        for block in content_blocks:
+            db.session.add(block)
+        
+        db.session.commit()
+        
+        return jsonify({
+            'message': 'Default data initialized successfully',
+            'data': {
+                'projects': len(projects),
+                'skills': len(skills),
+                'about_sections': len(about_sections),
+                'content_blocks': len(content_blocks)
+            }
+        }), 201
+        
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500

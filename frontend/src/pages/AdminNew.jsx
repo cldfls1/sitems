@@ -11,6 +11,7 @@ import {
   getProjects, updateProject, createProject, deleteProject,
   getAboutSections, updateAboutSection, createAboutSection, deleteAboutSection,
   getSkills, updateSkill, createSkill, deleteSkill,
+  initializeData,
 } from '../utils/api';
 
 const AdminNew = () => {
@@ -182,6 +183,26 @@ const AdminNew = () => {
     }
   };
 
+  const handleInitializeData = async () => {
+    if (!confirm('Load demo data? This will add sample projects, skills, about sections, and content blocks.')) {
+      return;
+    }
+    
+    setLoading(true);
+    try {
+      const result = await initializeData();
+      showToast('Demo data loaded successfully! 🎉', 'success');
+      // Reload current tab data
+      await loadData();
+    } catch (error) {
+      console.error('Error initializing data:', error);
+      const errorMsg = error.response?.data?.error || error.message || 'Failed to load demo data';
+      showToast(`Error: ${errorMsg}`, 'error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const renderForm = () => {
     if (!editingItem) return null;
 
@@ -214,9 +235,19 @@ const AdminNew = () => {
       return (
         <div className="text-center py-20">
           <p className="text-gray-500 mb-4">No items yet</p>
-          <button onClick={handleCreate} className="btn-primary inline-flex items-center gap-2">
-            <FiPlus /> Create First Item
-          </button>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+            <button 
+              onClick={handleInitializeData} 
+              className="btn-primary inline-flex items-center gap-2"
+              disabled={loading}
+            >
+              <FiDatabase /> {loading ? 'Loading...' : 'Load Demo Data'}
+            </button>
+            <span className="text-gray-600">or</span>
+            <button onClick={handleCreate} className="btn-secondary inline-flex items-center gap-2">
+              <FiPlus /> Create First Item
+            </button>
+          </div>
         </div>
       );
     }

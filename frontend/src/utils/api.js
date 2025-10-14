@@ -146,6 +146,12 @@ export const healthCheck = async () => {
   return response.data;
 };
 
+// Initialize default data
+export const initializeData = async () => {
+  const response = await api.post('/init-data');
+  return response.data;
+};
+
 // ============= NEW CMS API =============
 
 // Site Settings
