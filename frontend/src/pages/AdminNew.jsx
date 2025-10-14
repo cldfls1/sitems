@@ -95,7 +95,9 @@ const AdminNew = () => {
       }
       setData(result);
     } catch (error) {
-      showToast('Error loading data', 'error');
+      console.error('Error loading data:', error);
+      const errorMsg = error.response?.data?.error || error.message || 'Failed to connect to API. Check backend connection.';
+      showToast(`Error loading data: ${errorMsg}`, 'error');
     } finally {
       setLoading(false);
     }
