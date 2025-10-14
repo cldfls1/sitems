@@ -9,5 +9,5 @@ from app import create_app
 # Create app instance for Vercel
 app = create_app()
 
+# This is the entry point for Vercel Serverless Functions
 # Vercel will use this app instance directly
-# No need for a separate handler function
