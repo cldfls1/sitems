@@ -324,35 +324,35 @@ const ProjectForm = ({ item, onChange }) => (
   <div className="space-y-4">
     <Input
       label="Title"
-      value={item.title}
+      value={item.title || ''}
       onChange={(e) => onChange({ ...item, title: e.target.value })}
       required
     />
     <Textarea
       label="Description"
-      value={item.description}
+      value={item.description || ''}
       onChange={(e) => onChange({ ...item, description: e.target.value })}
       rows={3}
       required
     />
     <Input
       label="Short Description"
-      value={item.short_description}
+      value={item.short_description || ''}
       onChange={(e) => onChange({ ...item, short_description: e.target.value })}
     />
     <Input
       label="GitHub URL"
-      value={item.github_url}
+      value={item.github_url || ''}
       onChange={(e) => onChange({ ...item, github_url: e.target.value })}
     />
     <Input
       label="Demo URL"
-      value={item.demo_url}
+      value={item.demo_url || ''}
       onChange={(e) => onChange({ ...item, demo_url: e.target.value })}
     />
     <Input
       label="Category"
-      value={item.category}
+      value={item.category || ''}
       onChange={(e) => onChange({ ...item, category: e.target.value })}
     />
     <Input
@@ -365,7 +365,7 @@ const ProjectForm = ({ item, onChange }) => (
       <label className="flex items-center gap-2 cursor-pointer">
         <input
           type="checkbox"
-          checked={item.featured}
+          checked={item.featured || false}
           onChange={(e) => onChange({ ...item, featured: e.target.checked })}
           className="w-4 h-4"
         />
@@ -374,7 +374,7 @@ const ProjectForm = ({ item, onChange }) => (
       <Input
         label="Order"
         type="number"
-        value={item.order}
+        value={item.order || 0}
         onChange={(e) => onChange({ ...item, order: parseInt(e.target.value) || 0 })}
         className="w-24"
       />
@@ -386,27 +386,27 @@ const ContentForm = ({ item, onChange }) => (
   <div className="space-y-4">
     <Input
       label="Key"
-      value={item.key}
+      value={item.key || ''}
       onChange={(e) => onChange({ ...item, key: e.target.value })}
       required
     />
     <div className="grid grid-cols-2 gap-4">
       <Input
         label="Type"
-        value={item.type}
+        value={item.type || ''}
         onChange={(e) => onChange({ ...item, type: e.target.value })}
         required
       />
       <Input
         label="Page"
-        value={item.page}
+        value={item.page || ''}
         onChange={(e) => onChange({ ...item, page: e.target.value })}
         required
       />
     </div>
     <Textarea
       label="Content"
-      value={item.content}
+      value={item.content || ''}
       onChange={(e) => onChange({ ...item, content: e.target.value })}
       rows={4}
       required
@@ -414,7 +414,7 @@ const ContentForm = ({ item, onChange }) => (
     <Input
       label="Order"
       type="number"
-      value={item.order}
+      value={item.order || 0}
       onChange={(e) => onChange({ ...item, order: parseInt(e.target.value) || 0 })}
     />
   </div>
@@ -424,19 +424,19 @@ const AboutForm = ({ item, onChange }) => (
   <div className="space-y-4">
     <Input
       label="Section Key"
-      value={item.section_key}
+      value={item.section_key || ''}
       onChange={(e) => onChange({ ...item, section_key: e.target.value })}
       required
     />
     <Input
       label="Title"
-      value={item.title}
+      value={item.title || ''}
       onChange={(e) => onChange({ ...item, title: e.target.value })}
       required
     />
     <Textarea
       label="Content"
-      value={item.content}
+      value={item.content || ''}
       onChange={(e) => onChange({ ...item, content: e.target.value })}
       rows={4}
       required
@@ -444,13 +444,13 @@ const AboutForm = ({ item, onChange }) => (
     <div className="grid grid-cols-2 gap-4">
       <Input
         label="Icon (emoji)"
-        value={item.icon}
+        value={item.icon || ''}
         onChange={(e) => onChange({ ...item, icon: e.target.value })}
       />
       <Input
         label="Order"
         type="number"
-        value={item.order}
+        value={item.order || 0}
         onChange={(e) => onChange({ ...item, order: parseInt(e.target.value) || 0 })}
       />
     </div>
@@ -461,13 +461,13 @@ const SkillForm = ({ item, onChange }) => (
   <div className="space-y-4">
     <Input
       label="Name"
-      value={item.name}
+      value={item.name || ''}
       onChange={(e) => onChange({ ...item, name: e.target.value })}
       required
     />
     <Input
       label="Category"
-      value={item.category}
+      value={item.category || ''}
       onChange={(e) => onChange({ ...item, category: e.target.value })}
       required
     />
@@ -475,7 +475,7 @@ const SkillForm = ({ item, onChange }) => (
       <Input
         label="Level (0-100)"
         type="number"
-        value={item.level}
+        value={item.level || 50}
         onChange={(e) => onChange({ ...item, level: parseInt(e.target.value) || 50 })}
         min="0"
         max="100"
@@ -483,13 +483,13 @@ const SkillForm = ({ item, onChange }) => (
       <Input
         label="Order"
         type="number"
-        value={item.order}
+        value={item.order || 0}
         onChange={(e) => onChange({ ...item, order: parseInt(e.target.value) || 0 })}
       />
     </div>
     <Input
       label="Icon (emoji)"
-      value={item.icon}
+      value={item.icon || ''}
       onChange={(e) => onChange({ ...item, icon: e.target.value })}
     />
   </div>

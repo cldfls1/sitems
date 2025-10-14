@@ -246,7 +246,7 @@ const SiteSettings = ({ onSave }) => {
                 </label>
                 {field.type === 'textarea' ? (
                   <textarea
-                    value={settings[field.key]}
+                    value={settings[field.key] || ''}
                     onChange={(e) => handleChange(field.key, e.target.value)}
                     rows={3}
                     className="w-full px-4 py-3 rounded-lg glass-strong border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-primary-500/50 transition-colors resize-none"
@@ -254,7 +254,7 @@ const SiteSettings = ({ onSave }) => {
                 ) : (
                   <input
                     type={field.type}
-                    value={settings[field.key]}
+                    value={settings[field.key] || ''}
                     onChange={(e) => handleChange(field.key, e.target.value)}
                     className="w-full px-4 py-3 rounded-lg glass-strong border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-primary-500/50 transition-colors"
                   />
